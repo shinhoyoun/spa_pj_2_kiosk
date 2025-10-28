@@ -1,8 +1,7 @@
-package kiosk.LV_4;
+package kiosk.LV_5;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 /**
  * 메인 메뉴
