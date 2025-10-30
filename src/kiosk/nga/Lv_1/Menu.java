@@ -1,4 +1,4 @@
-package kiosk.LV_5;
+package kiosk.nga.Lv_1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +15,48 @@ public class Menu {
     private final List<MenuItem> menuItems;   // 카테고리에 속한 메뉴 리스트
 
     public Menu(String name) {
-        this.name = name;
+
+        if (name == null || name.isBlank()) {
+            this.name = "NoName";
+        } else {
+            this.name = name;
+        }
         this.menuItems = new ArrayList<>();
     }
+
 
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("카테고리 이름 비어있을수없음");
+        }
+    }
+
 
     public List<MenuItem> getMenuItems() {
         return menuItems;
     }
 
     public void addMenuItem(MenuItem item) {
-        menuItems.add(item);
+        if(item == null) {
+            throw new IllegalArgumentException("Item 은 null이 수 없습니다.");
+        }
+            menuItems.add(item);
+    }
+
+//    public void addMenuItem(MenuItem item) {
+//        menuItems.add(item);
+//    }
+
+    public boolean removeMenuItem(MenuItem item) {
+        return menuItems.remove(item);
+    }
+
+    public int size() {
+        return menuItems.size();
     }
 
 

@@ -1,4 +1,4 @@
-package kiosk.LV_4;
+package kiosk.ess.LV_4;
 
 
 /**
@@ -24,6 +24,8 @@ public class MenuItem {
 
 
     // 기능
+
+    // getter
     public String getName() {
         return name;
     }

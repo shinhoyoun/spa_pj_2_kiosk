@@ -1,4 +1,4 @@
-package kiosk.LV_2;
+package kiosk.ess.LV_2;
 
 import java.util.ArrayList;
 import java.util.List;

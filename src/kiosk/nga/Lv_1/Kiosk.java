@@ -1,8 +1,8 @@
-package kiosk.LV_4;
+package kiosk.nga.Lv_1;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 /**
  * 메인 메뉴
@@ -14,9 +14,17 @@ import java.util.InputMismatchException;
 public class Kiosk {
 
     private final List<Menu> menus;
+    private Cart cart;
 
     public Kiosk(List<Menu> menus) {
         this.menus = menus;
+        this.cart = new Cart();
+
+//        if (menus == null) {
+//            this.menus = new ArrayList<>();
+//        } else {
+//            this.menus = new ArrayList<>(menus);
+//        }
     }
 
 //    public void mOutput() {
@@ -33,14 +41,15 @@ public class Kiosk {
     public void start() {
 
         try (Scanner sc = new Scanner(System.in)) {
-            boolean running = true;
 
+            boolean running = true;
 
             while (running) {   // 메인 메뉴 반복
                 System.out.println("\n[ MAIN MENU ]");
                 for (int i = 0; i < menus.size(); i++) {
                     System.out.printf("%d. %s%n", i + 1, menus.get(i).getName());
                 }
+                System.out.println("9. 장바구니");
                 System.out.println("0. 종료");
                 System.out.print("번호를 입력하세요 : ");
 
@@ -55,6 +64,16 @@ public class Kiosk {
                 if ("0".equals(input)) {
                     System.out.println(" 키오스크를 종료합니다. ");
                     break;
+                } else if (input.equals("9")) {
+                    cart.displayCart();
+                    if (!cart.isEmpty()) {
+                        System.out.println("결제하시겠습니까? (예 : Y / 아니오 : N");
+                        String payInput = sc.nextLine().trim();
+                        if (payInput.equalsIgnoreCase("Y")) {
+                            cart.clearCart();
+                        }
+                    }
+                    continue;
                 }
 
                 int mainChoice;
@@ -97,7 +116,7 @@ public class Kiosk {
 
                     if (itemNum == 0) {
                         inCategory = false; // 카테고리 루프 종료
-                        continue;
+                        break;
                     }
 
                     if (itemNum < 1 || itemNum > selectedMenu.getMenuItems().size()) {
@@ -105,9 +124,27 @@ public class Kiosk {
                         continue;
                     }
 
-                    MenuItem chosen = selectedMenu.getMenuItems().get(itemNum - 1);
-                    System.out.printf("선택한 메뉴: %s | W %.1f | %s%n",
-                            chosen.getName(), chosen.getPrice(), chosen.getDescription());
+
+
+                    MenuItem choose = selectedMenu.getMenuItems().get(itemNum - 1);
+
+                    System.out.printf("선택한 메뉴: %s | W %.1f | %s\n",
+                            choose.getName(), choose.getPrice(), choose.getDescription());
+
+                    System.out.println("장바구니에 추가하겠습니까? : 1: 예 / 2: 아니오");
+                    int confirm = sc.nextInt();
+                    sc.nextLine();
+
+                    if (confirm == 1) {
+                        System.out.println("수량 입력하세요 : ");
+                        int quantity = sc.nextInt();
+                        sc.nextLine();
+
+                        cart.addToCart(choose, quantity);
+                        cart.displayCart();
+                    }
+
+
                 }
             }
 
